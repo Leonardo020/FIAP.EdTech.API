@@ -41,7 +41,7 @@ namespace FIAP.EdTech.API.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return UnprocessableEntity(ModelState);
 
                 _disciplinaRepository.Post(model);
 

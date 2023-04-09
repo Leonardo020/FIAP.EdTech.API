@@ -17,24 +17,15 @@ namespace FIAP.EdTech.API.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SalaModel>()
-                .HasOne(s => s.Escola)
-                .WithMany(e => e.Salas)
-                .HasForeignKey(s => s.EscolaId);
+            /*Mapeamentos necessários para o cast do ORM não quebrar*/
 
-            //Many-To-Many
+            //Obs: caso precise fazer uma realação Many-To-Many sem utilizar a classe de ligação na model principal. Nesse caso, a de aluno.
             //modelBuilder.Entity<AlunoModel>()
             // .HasMany(a => a.Salas)
             // .WithMany(s => s.Alunos)
             // .UsingEntity<SalaAlunoModel>(
             //    l => l.HasOne<SalaModel>().WithMany().HasForeignKey(a => a.SalaId),
             //    r => r.HasOne<AlunoModel>().WithMany().HasForeignKey(s => s.AlunoId));
-
-            //modelBuilder.Entity<AlunoModel>()
-            //   .HasMany(a => a.Salas)
-            //   .WithOne(d => d.Aluno)
-            //   .HasForeignKey(a => a.AlunoId);
-
 
             modelBuilder.Entity<AlunoModel>()
                 .HasMany(a => a.Salas)

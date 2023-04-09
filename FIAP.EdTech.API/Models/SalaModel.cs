@@ -11,15 +11,17 @@ namespace FIAP.EdTech.API.Models
         [Key]
         [Column("COD_SALA")]
         public int Id { get; set; }
-
-        [Required]
+        
+        [Required(ErrorMessage = "Nome da sala não informado.")]
         [Column("NOME_SALA")]
-        [MaxLength(15)]
+        [StringLength(15)]
         public string? Nome { get; set; }
 
+        [Required(ErrorMessage = "Id da Modalidade de Ensino não inforado")]
         [Column("COD_MODALIDADE_ENSINO")]
         public int ModalidadeEnsinoId { get; set; }
 
+        [Required(ErrorMessage = "Id da Escola não informado")]
         [Column("COD_ESCOLA")]
         public int EscolaId { get; set; }
 

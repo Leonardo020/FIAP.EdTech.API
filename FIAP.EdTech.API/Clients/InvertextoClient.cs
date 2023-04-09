@@ -1,11 +1,12 @@
-﻿using FIAP.EdTech.API.Models.Payloads;
+﻿using FIAP.EdTech.API.Models.Enums;
+using FIAP.EdTech.API.Models.Payloads;
 using Newtonsoft.Json;
 
 namespace FIAP.EdTech.API.Clients
 {
     public class InvertextoClient
     {
-        public async Task<IList<FeriadoResponse>> GetFeriadosNacionais(string uf)
+        public async Task<IList<FeriadoResponse>> GetFeriadosNacionais(UF uf)
         {
             string token = Environment.GetEnvironmentVariable("INVERTEXTO_TOKEN")!;
 

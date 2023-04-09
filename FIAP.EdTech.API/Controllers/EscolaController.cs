@@ -1,5 +1,6 @@
 using FIAP.EdTech.API.Clients;
 using FIAP.EdTech.API.Models;
+using FIAP.EdTech.API.Models.Enums;
 using FIAP.EdTech.API.Models.Escola;
 using FIAP.EdTech.API.Repository;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -39,16 +40,20 @@ namespace FIAP.EdTech.API.Controllers
 
 
         [HttpGet("Feriados/{uf}")]
-        public async Task<IActionResult> Get(string uf)
+        public async Task<IActionResult> Get(UF uf)
         {
             try
             {
+                var holidays = new List<FeriadoModel>();
                 var list = await _invertextoClient.GetFeriadosNacionais(uf);
 
                 if (!list.Any())
                     return NotFound();
 
-                return Ok(list);
+                foreach (var item in list)
+                    holidays.Add(new FeriadoModel { Data = item.Date, Descricao = item.Name });
+
+                return Ok(holidays);
 
             }
             catch (Exception e)
@@ -65,7 +70,7 @@ namespace FIAP.EdTech.API.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return UnprocessableEntity(ModelState);
 
                 _escolaRepository.Post(model);
 

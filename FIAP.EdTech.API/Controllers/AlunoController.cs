@@ -61,7 +61,7 @@ namespace FIAP.EdTech.API.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return UnprocessableEntity(ModelState);
 
                 _alunoRepository.Post(model);
 
@@ -74,13 +74,36 @@ namespace FIAP.EdTech.API.Controllers
             }
         }
 
-        [HttpPost("Nota")]
+        [HttpGet("{id}/Boletim")]
+        public IActionResult GetReport(int id)
+        {
+            try
+            {
+                var aluno = _alunoRepository.GetReportByStudentId(id);
+
+                if (aluno is null)
+                    return NotFound();
+
+                return Ok(aluno);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { Msg = $"Ocorreu um erro ao efetuar a consulta: {e.Message}" });
+            }
+        }
+
+
+        [HttpPost("Boletim/Nota")]
         public IActionResult Post(DisciplinaAlunoModel model)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return UnprocessableEntity(ModelState);
+
+                if (model.Nota < 0 || model.Nota > 10)
+                    return UnprocessableEntity(new { Msg = "Nota inserida é inválida. Deve estar entre (0 - 10)" });
 
                 model.Aprovado = model.Nota > 7;
 
