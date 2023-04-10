@@ -13,42 +13,49 @@ namespace FIAP.EdTech.API.Controllers
         }
 
 
-        public IList<AlunoModel> Get() => _context.Aluno
-                                             .Include(a => a.Salas)!
-                                                    .ThenInclude(sa => sa.Disciplinas)!
-                                                        .ThenInclude(d => d.Disciplina)
-                                            .Include(a => a.Salas)!
-                                                    .ThenInclude(sa => sa.DetalheSala)
-                                                        .ThenInclude(s => s != null ? s.Escola : null)
-                                            .Include(a => a.Salas)!
-                                                    .ThenInclude(sa => sa.DetalheSala)
-                                                        .ThenInclude(s => s != null ? s.ModalidadeEnsino : null)
-                                            .ToList();
+        public IList<AlunoModel> Get()
+        {
+            return _context.Aluno.Include(a => a.Salas)!
+                    .ThenInclude(sa => sa.Disciplinas)!
+                                .ThenInclude(d => d.Disciplina)
+                    .Include(a => a.Salas)!
+                            .ThenInclude(sa => sa.DetalheSala)
+                                .ThenInclude(s => s != null ? s.Escola : null)
+                    .Include(a => a.Salas)!
+                            .ThenInclude(sa => sa.DetalheSala)
+                                .ThenInclude(s => s != null ? s.ModalidadeEnsino : null)
+                    .ToList();
+        }
 
-        public AlunoModel? GetById(int id) => _context.Aluno
-                                              .Include(a => a.Salas)!
-                                                      .ThenInclude(sa => sa.DetalheSala)
-                                                          .ThenInclude(s => s != null ? s.Escola : null)
-                                              .Include(a => a.Salas)!
-                                                      .ThenInclude(sa => sa.DetalheSala)
-                                                          .ThenInclude(s => s != null ? s.ModalidadeEnsino : null)
-                                              .FirstOrDefault(a => a.Id == id);
+        public AlunoModel? GetById(int id)
+        {
+            return _context.Aluno.Include(a => a.Salas)!
+                        .ThenInclude(sa => sa.DetalheSala)
+                            .ThenInclude(s => s != null ? s.Escola : null)
+                .Include(a => a.Salas)!
+                        .ThenInclude(sa => sa.DetalheSala)
+                            .ThenInclude(s => s != null ? s.ModalidadeEnsino : null)
+                .FirstOrDefault(a => a.Id == id);
+        }
 
-        public AlunoModel? GetReportByStudentId(int id) => _context.Aluno
-                                               .Include(a => a.Salas)!
-                                                    .ThenInclude(sa => sa.Disciplinas)!
-                                                        .ThenInclude(d => d.Disciplina)
-                                                .Include(a => a.Salas)!
-                                                        .ThenInclude(sa => sa.DetalheSala)
-                                                            .ThenInclude(s => s != null ? s.Escola : null)
-                                                .Include(a => a.Salas)!
-                                                        .ThenInclude(sa => sa.DetalheSala)
-                                                            .ThenInclude(s => s != null ? s.ModalidadeEnsino : null)
-                                                .FirstOrDefault(a => a.Id == id);
+        public AlunoModel? GetReportByStudentId(int id)
+        {
+            return _context.Aluno
+                    .Include(a => a.Salas)!
+                        .ThenInclude(sa => sa.Disciplinas)!
+                            .ThenInclude(d => d.Disciplina)
+                    .Include(a => a.Salas)!
+                            .ThenInclude(sa => sa.DetalheSala)
+                                .ThenInclude(s => s != null ? s.Escola : null)
+                    .Include(a => a.Salas)!
+                            .ThenInclude(sa => sa.DetalheSala)
+                                .ThenInclude(s => s != null ? s.ModalidadeEnsino : null)
+                    .FirstOrDefault(a => a.Id == id);
+        }
 
         public void Post(AlunoModel model)
         {
-            _context.Aluno.Add(model); 
+            _context.Aluno.Add(model);
             _context.SaveChanges();
         }
 

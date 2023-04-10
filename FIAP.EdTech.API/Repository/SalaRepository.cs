@@ -11,9 +11,11 @@ namespace FIAP.EdTech.API.Repository
             _context = context;
         }
 
-        public IList<SalaModel> Get() => _context.Sala
-                                            .Include(sala => sala.Escola)
-                                            .Include(sala => sala.ModalidadeEnsino)
-                                            .ToList();
+        public IList<SalaModel> Get()
+        {
+            return _context.Sala.Include(sala => sala.Escola)
+                                .Include(sala => sala.ModalidadeEnsino)
+                                .ToList();
+        }
     }
 }

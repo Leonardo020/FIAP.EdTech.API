@@ -10,7 +10,10 @@ namespace FIAP.EdTech.API.Repository
             _context = context;
         }
 
-        public IList<DisciplinaModel> Get() => _context.Disciplina.ToList();
+        public IList<DisciplinaModel> Get()
+        {
+            return _context.Disciplina.ToList();
+        }
 
         public void Post(DisciplinaModel model) { _context.Disciplina.Add(model); _context.SaveChanges(); }
     }

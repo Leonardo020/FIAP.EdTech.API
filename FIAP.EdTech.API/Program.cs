@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DatabaseConnection");
 builder.Services.AddDbContext<DataBaseContext>(options =>
-    options.UseSqlServer(connectionString).EnableSensitiveDataLogging(true)
+    options.UseOracle(connectionString).EnableSensitiveDataLogging(true)
 );
 
 // Post services to the container.
